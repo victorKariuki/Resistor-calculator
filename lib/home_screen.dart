@@ -15,120 +15,116 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Resistor Master')),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DecoderView(),
-                    ),
-                  );
-                },
-                child: const Text('Through-Hole Decoder'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SmdDecoderView(),
-                    ),
-                  );
-                },
-                child: const Text('SMD Decoder'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ESeriesView(),
-                    ),
-                  );
-                },
-                child: const Text('E-Series Validator'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const JunkBoxSolverView(),
-                    ),
-                  );
-                },
-                child: const Text('Junk Box Solver'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FavoritesView(),
-                    ),
-                  );
-                },
-                child: const Text('Favorites'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HistoryView(),
-                    ),
-                  );
-                },
-                child: const Text('History'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PowerAnalysisView(),
-                    ),
-                  );
-                },
-                child: const Text('Power Calculator'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const VoltageDividerView(),
-                    ),
-                  );
-                },
-                child: const Text('Voltage Divider'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LMatchView()),
-                  );
-                },
-                child: const Text('L-Match Impedance'),
-              ),
-            ],
+      appBar: AppBar(title: const Text('Resistor Calculator')),
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            leading: const Icon(Icons.electrical_services),
+            title: const Text('Through-Hole Decoder'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const DecoderView(),
+                ),
+              );
+            },
           ),
-        ),
+          ListTile(
+            leading: const Icon(Icons.memory),
+            title: const Text('SMD Decoder'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SmdDecoderView(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.format_list_numbered),
+            title: const Text('E-Series Validator'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ESeriesView(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.inventory_2),
+            title: const Text('Junk Box Solver'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const JunkBoxSolverView(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.favorite),
+            title: const Text('Favorites'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FavoritesView(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.history),
+            title: const Text('History'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HistoryView(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.power),
+            title: const Text('Power Calculator'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PowerAnalysisView(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.mediation),
+            title: const Text('Voltage Divider'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const VoltageDividerView(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.network_check),
+            title: const Text('L-Match Impedance'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LMatchView()),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

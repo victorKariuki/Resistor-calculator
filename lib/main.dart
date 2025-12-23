@@ -8,7 +8,7 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
-      child: const MyApp(),
+      child: const ResistorCalculatorApp(),
     ),
   );
 }
@@ -32,8 +32,8 @@ class ThemeProvider with ChangeNotifier {
   }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ResistorCalculatorApp extends StatelessWidget {
+  const ResistorCalculatorApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class MyApp extends StatelessWidget {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         return MaterialApp(
-          title: 'Resistor Master',
+          title: 'Resistor Calculator',
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: themeProvider.themeMode,
