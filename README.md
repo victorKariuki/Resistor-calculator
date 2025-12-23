@@ -8,19 +8,6 @@ Resistor Calculator is a Flutter application designed to assist electronics hobb
 *   **SMD Resistor Decoder:** Quickly find the value of a surface-mount (SMD) resistor by entering its 3 or 4-digit code, or its EIA-96 code.
 *   **"Junk Box" E-Series Solver:** Find the nearest standard resistor value from the common E-series (E6, E12, E24, E48, E96, E192). This feature is perfect for when you need to find a suitable replacement resistor from your collection of parts.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 ## Building and Running the Application
 
 To build and run this application, you will need to have the Flutter SDK installed.
