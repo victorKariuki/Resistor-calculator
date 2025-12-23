@@ -33,20 +33,31 @@ class _VoltageDividerViewState extends State<VoltageDividerView> {
     }
 
     final results = VoltageDividerLogic.calculate(
-        vin: vin, vout: vout, r1: r1, r2: r2, current: current);
+      vin: vin,
+      vout: vout,
+      r1: r1,
+      r2: r2,
+      current: current,
+    );
 
     setState(() {
-      _calculatedR1 = results.containsKey('r1') ? '${results['r1']!.toStringAsFixed(2)} Ω' : '${_r1Controller.text} Ω';
-      _calculatedR2 = results.containsKey('r2') ? '${results['r2']!.toStringAsFixed(2)} Ω' : '${_r2Controller.text} Ω';
+      _calculatedR1 = results.containsKey('r1')
+          ? '${results['r1']!.toStringAsFixed(2)} Ω'
+          : '${_r1Controller.text} Ω';
+      _calculatedR2 = results.containsKey('r2')
+          ? '${results['r2']!.toStringAsFixed(2)} Ω'
+          : '${_r2Controller.text} Ω';
 
       final r1Value = results.containsKey('r1') ? results['r1']! : r1;
       final r2Value = results.containsKey('r2') ? results['r2']! : r2;
 
-      if(r1Value != null) {
-        _standardR1 = '${VoltageDividerLogic.findNearestStandardValue(r1Value)} Ω';
+      if (r1Value != null) {
+        _standardR1 =
+            '${VoltageDividerLogic.findNearestStandardValue(r1Value)} Ω';
       }
-      if(r2Value != null) {
-        _standardR2 = '${VoltageDividerLogic.findNearestStandardValue(r2Value)} Ω';
+      if (r2Value != null) {
+        _standardR2 =
+            '${VoltageDividerLogic.findNearestStandardValue(r2Value)} Ω';
       }
     });
   }
@@ -75,7 +86,7 @@ class _VoltageDividerViewState extends State<VoltageDividerView> {
             icon: const Icon(Icons.clear),
             onPressed: _clearFields,
             tooltip: 'Clear Fields',
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -89,53 +100,86 @@ class _VoltageDividerViewState extends State<VoltageDividerView> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Text('Enter known values', style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      'Enter known values',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                     const SizedBox(height: 15),
-                     Text('Provide Vin, Vout, and one other value.', textAlign: TextAlign.center,),
+                    Text(
+                      'Provide Vin, Vout, and one other value.',
+                      textAlign: TextAlign.center,
+                    ),
                     const SizedBox(height: 20),
-                    _buildTextField(controller: _vinController, label: 'Input Voltage (Vin)'),
+                    _buildTextField(
+                      controller: _vinController,
+                      label: 'Input Voltage (Vin)',
+                    ),
                     const SizedBox(height: 15),
-                    _buildTextField(controller: _voutController, label: 'Output Voltage (Vout)'),
+                    _buildTextField(
+                      controller: _voutController,
+                      label: 'Output Voltage (Vout)',
+                    ),
                     const SizedBox(height: 15),
-                    _buildTextField(controller: _r1Controller, label: 'Resistor 1 (R1) in Ω'),
+                    _buildTextField(
+                      controller: _r1Controller,
+                      label: 'Resistor 1 (R1) in Ω',
+                    ),
                     const SizedBox(height: 15),
-                    _buildTextField(controller: _r2Controller, label: 'Resistor 2 (R2) in Ω'),
-                     const SizedBox(height: 15),
-                    _buildTextField(controller: _currentController, label: 'Divider Current (A)'),
+                    _buildTextField(
+                      controller: _r2Controller,
+                      label: 'Resistor 2 (R2) in Ω',
+                    ),
+                    const SizedBox(height: 15),
+                    _buildTextField(
+                      controller: _currentController,
+                      label: 'Divider Current (A)',
+                    ),
                     const SizedBox(height: 25),
-                    ElevatedButton(onPressed: _calculate, child: const Text('Calculate')),
+                    ElevatedButton(
+                      onPressed: _calculate,
+                      child: const Text('Calculate'),
+                    ),
                   ],
                 ),
               ),
             ),
             if (_calculatedR1.isNotEmpty)
-            Card(
-              margin: const EdgeInsets.only(top: 20),
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Text('Calculated Values', style: Theme.of(context).textTheme.titleLarge),
-                    const SizedBox(height: 15),
-                    Text('R1: $_calculatedR1'),
-                    Text('R2: $_calculatedR2'),
-                    const SizedBox(height: 20),
-                    Text('Nearest E24 Standard Values', style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 10),
-                    Text('R1: $_standardR1'),
-                    Text('R2: $_standardR2'),
-                  ],
+              Card(
+                margin: const EdgeInsets.only(top: 20),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Calculated Values',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 15),
+                      Text('R1: $_calculatedR1'),
+                      Text('R2: $_calculatedR2'),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Nearest E24 Standard Values',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 10),
+                      Text('R1: $_standardR1'),
+                      Text('R2: $_standardR2'),
+                    ],
+                  ),
                 ),
               ),
-            )
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({required TextEditingController controller, required String label}) {
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+  }) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(

@@ -43,16 +43,12 @@ class _HistoryViewState extends State<HistoryView> {
         ],
       ),
       body: _history.isEmpty
-          ? const Center(
-              child: Text('You have no recent calculations.'),
-            )
+          ? const Center(child: Text('You have no recent calculations.'))
           : ListView.builder(
               itemCount: _history.length,
               itemBuilder: (context, index) {
                 final calculation = _history[index];
-                return ListTile(
-                  title: Text(calculation),
-                );
+                return ListTile(title: Text(calculation));
               },
             ),
     );

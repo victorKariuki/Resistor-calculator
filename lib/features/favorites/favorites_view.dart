@@ -50,9 +50,7 @@ class _FavoritesViewState extends State<FavoritesView> {
         ],
       ),
       body: _favorites.isEmpty
-          ? const Center(
-              child: Text('You have no favorite resistors yet.'),
-            )
+          ? const Center(child: Text('You have no favorite resistors yet.'))
           : ListView.builder(
               itemCount: _favorites.length,
               itemBuilder: (context, index) {

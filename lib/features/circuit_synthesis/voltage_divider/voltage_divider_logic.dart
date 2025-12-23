@@ -3,8 +3,30 @@ import 'dart:math';
 class VoltageDividerLogic {
   // E24 series resistor values
   static const List<double> e24series = [
-    1.0, 1.1, 1.2, 1.3, 1.5, 1.6, 1.8, 2.0, 2.2, 2.4, 2.7, 3.0, 3.3,
-    3.6, 3.9, 4.3, 4.7, 5.1, 5.6, 6.2, 6.8, 7.5, 8.2, 9.1
+    1.0,
+    1.1,
+    1.2,
+    1.3,
+    1.5,
+    1.6,
+    1.8,
+    2.0,
+    2.2,
+    2.4,
+    2.7,
+    3.0,
+    3.3,
+    3.6,
+    3.9,
+    4.3,
+    4.7,
+    5.1,
+    5.6,
+    6.2,
+    6.8,
+    7.5,
+    8.2,
+    9.1,
   ];
 
   static Map<String, double> calculate({
@@ -28,7 +50,7 @@ class VoltageDividerLogic {
     } else {
       // Default case if no optional value is provided, we can assume a total resistance, e.g. 10k
       final rTotal = 10000.0;
-      final r1Calc = rTotal * (1 - (vout/vin));
+      final r1Calc = rTotal * (1 - (vout / vin));
       final r2Calc = rTotal - r1Calc;
       return {'r1': r1Calc, 'r2': r2Calc};
     }
@@ -48,7 +70,7 @@ class VoltageDividerLogic {
         closest = standardValue;
       }
     }
-    
+
     return closest * magnitude;
   }
 }

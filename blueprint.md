@@ -1,42 +1,63 @@
-# Resistor Master - Blueprint
+# Resistor Master Blueprint
 
 ## Overview
 
-**Purpose:** To create the definitive "God Mode" engineering utility for resistor analysis, as specified in the SRS. The application is a cross-platform tool for identification, circuit synthesis, power analysis, and RF modeling.
+Resistor Master is a Flutter application designed for electronics enthusiasts and professionals. It provides a suite of tools to simplify resistor-related calculations and circuit analysis. This document outlines the existing features and the plan to evolve the application into the "Ultimate Edition" as specified in the SRS v4.0.
 
-**Target Users:** Students, Hobbyists/Makers, Embedded Engineers, and RF/Analog Engineers.
+## Implemented Features
 
----
+*   **Through-Hole Resistor Decoder:** Decodes 4, 5, and 6-band resistors based on their color codes.
+*   **Through-Hole Reverse Lookup:** Converts a resistance value back to color bands.
+*   **SMD Resistor Decoder:** Decodes 3-digit, 4-digit, and EIA-96 SMD resistor codes.
+*   **E-Series Validator & Quantizer:** Validates resistor values against standard E-series (E6-E192) and finds the nearest standard value.
+*   **Favorites:** Allows users to save frequently used resistor values.
+*   **History:** Keeps a record of all decoded resistor values and calculations.
+*   **Power Calculator:** Calculates power, voltage, current, or resistance.
+*   **Voltage Divider Calculator:** Computes output voltage.
+*   **L-Match Impedance Matching Calculator:** Designs impedance matching networks.
+*   **Theming:** Supports light, dark, and system themes with a Material 3 design.
 
-## Implemented Features (Final Version)
+## Design
 
-### Version 1.0 (Feature Complete)
+*   **Theme:** Uses Material 3 design principles with a deep purple seed color.
+*   **Fonts:** Utilizes Google Fonts (Oswald, Roboto, Open Sans) for typography.
+*   **Layout:** A central home screen provides navigation to all feature modules.
 
-*   **Dependencies:** `provider`, `google_fonts`, and `shared_preferences` added.
-*   **Theming:** Full Material 3 theming with light/dark mode toggle implemented.
-*   **Navigation:** A home screen has been added to navigate between the different features.
-*   **Core Feature: Through-Hole Decoder (3, 4, 5, & 6-Band):**
-    *   (REQ-1.1) Implemented 3, 4, 5, and 6-band resistor selection.
-    *   (REQ-1.2) The system displays Resistance, Tolerance, and TCR (for 6-band).
-    *   (REQ-1.3) A visual vector graphic of the resistor updates in real-time.
-    *   UI includes color selectors for each band and a real-time results display.
-*   **Core Feature: Reverse Lookup:**
-    *   (REQ-1.4) Implemented reverse lookup for all band counts.
-*   **Core Feature: SMD Decoder:**
-    *   (REQ-2.1) A new view for SMD resistor decoding has been created.
-    *   (REQ-2.2) The system can decode both standard 3/4-digit codes and the EIA-96 system.
-*   **Core Feature: Favorites & History:**
-    *   (REQ-3.1 - 3.6) Users can save favorite values and view a history of recent calculations.
-*   **Core Feature: Power & Heat Analysis:**
-    *   A calculator for Ohm's Law, power dissipation, and basic thermal analysis.
-    *   Inputs for two of the following: Voltage (V), Current (A), Resistance (Ω).
-    *   Calculates the remaining value and Power (W).
-    *   Includes a thermal analysis section to input thermal resistance (°C/W) and ambient temperature (°C) to estimate the component's temperature.
-*   **Core Feature: Circuit Synthesis (Voltage Divider):**
-    *   A voltage divider calculator.
-    *   Inputs for Vin, Vout, and one of the following: R1, R2, or desired current.
-    *   Calculates the required resistor values and suggests the closest standard E-series values.
-*   **Core Feature: RF & Analog Analysis (L-Match Impedance):**
-    *   An L-Network impedance matching calculator.
-    *   Inputs for Source Impedance, Load Impedance, and Frequency.
-    *   Calculates the required Inductor (L) and Capacitor (C) values for the matching network.
+## Development Plan (SRS v4.0)
+
+This section outlines the features to be implemented based on the Software Requirements Specification v4.0.
+
+### Current Task: "Junk Box" Reverse Solver
+
+Implementing REQ-4 from the SRS. This feature will find series and parallel combinations of resistors from a user-defined list to achieve a target resistance.
+
+### Future Features
+
+#### Domain 1: Identification & Fundamentals
+*   **[REQ-1.4] Through-Hole Reverse Lookup:** **(Completed)**
+*   **[REQ-2.3, 2.4] Advanced SMD Decoding:** **(Completed)**
+*   **[REQ-3] E-Series Validator & Quantizer:** **(Completed)**
+
+#### Domain 2: Circuit Design & Synthesis
+*   **[REQ-4] "Junk Box" Reverse Solver:** **(In Progress)**
+*   **[REQ-5.3, 5.4] Advanced Voltage Divider:** Add load analysis and output impedance calculation.
+*   **[REQ-6] LED Array Wizard:** Calculate current-limiting resistors for LED setups.
+*   **[REQ-7] Op-Amp Gain Calculator:** Design feedback networks for common op-amp configurations.
+
+#### Domain 3: Power & Physics
+*   **[REQ-8.2] Adiabatic Pulse Calculator:** Analyze resistor survivability during power surges.
+*   **[REQ-9] Thermal Derating Engine:** Calculate effective power rating based on ambient temperature.
+*   **[REQ-10] PCB Trace Resistance Calculator:** Model resistance and current capacity of PCB traces based on IPC standards.
+
+#### Domain 4: RF & Signal Integrity
+*   **[REQ-11] RF Attenuator Designer:** Design Pi, T, and Bridged-T attenuators.
+*   **[REQ-12] Thermal Noise Calculator:** Calculate Johnson-Nyquist noise for a resistor.
+*   **[REQ-13] High-Frequency Impedance Estimator:** Model parasitic ESL/ESR effects.
+
+#### Domain 5: Sensors & Manufacturing
+*   **[REQ-14] Thermistor Linearizer:** Convert resistance to temperature using Beta and Steinhart-Hart models.
+*   **[REQ-15] Wheatstone Bridge Analyzer:** Calculate the output of a Wheatstone bridge.
+
+#### UI/UX & Non-Functional Requirements
+*   **[UI-2] Metric Suffix Input:** Allow users to type "k", "M", "u" in input fields.
+*   **[NFR-4] Critical Warnings:** Implement safety warnings for exceeding component ratings.

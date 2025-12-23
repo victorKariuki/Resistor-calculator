@@ -30,9 +30,7 @@ class _SmdDecoderViewState extends State<SmdDecoderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SMD Decoder'),
-      ),
+      appBar: AppBar(title: const Text('SMD Decoder')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -43,13 +41,11 @@ class _SmdDecoderViewState extends State<SmdDecoderView> {
               decoration: const InputDecoration(
                 labelText: 'Enter SMD Code',
                 border: OutlineInputBorder(),
+                helperText: 'e.g., 103, 1002, 4R7, 01C',
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _decodeSmd,
-              child: const Text('Decode'),
-            ),
+            ElevatedButton(onPressed: _decodeSmd, child: const Text('Decode')),
             const SizedBox(height: 30),
             if (_resistance.isNotEmpty && _resistance != 'Invalid Code')
               Card(
@@ -75,7 +71,11 @@ class _SmdDecoderViewState extends State<SmdDecoderView> {
                         onPressed: () {
                           FavoritesManager.addFavorite(_resistance);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Saved "$_resistance" to favorites.')),
+                            SnackBar(
+                              content: Text(
+                                'Saved "$_resistance" to favorites.',
+                              ),
+                            ),
                           );
                         },
                         icon: const Icon(Icons.favorite_border),
@@ -88,9 +88,12 @@ class _SmdDecoderViewState extends State<SmdDecoderView> {
             if (_resistance == 'Invalid Code')
               Text(
                 'Invalid Code',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.red),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(color: Colors.red),
                 textAlign: TextAlign.center,
-                ),
+              ),
           ],
         ),
       ),

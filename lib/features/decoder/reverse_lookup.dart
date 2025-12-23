@@ -1,3 +1,4 @@
+import 'dart:math';
 
 import 'resistor_data.dart';
 
@@ -21,16 +22,21 @@ class ReverseLookup {
   static double? parseResistance(String input) {
     if (input.isEmpty) return null;
 
-    input = input.replaceAll('Ω', '').trim();
+    input = input.replaceAll('Ω', '').trim().toUpperCase();
+
+    if (input.contains('R')) {
+      input = input.replaceAll('R', '.');
+    }
+
     double multiplier = 1.0;
 
-    if (input.toUpperCase().endsWith('G')) {
+    if (input.endsWith('G')) {
       multiplier = 1e9;
       input = input.substring(0, input.length - 1);
-    } else if (input.toUpperCase().endsWith('M')) {
+    } else if (input.endsWith('M')) {
       multiplier = 1e6;
       input = input.substring(0, input.length - 1);
-    } else if (input.toUpperCase().endsWith('K')) {
+    } else if (input.endsWith('K')) {
       multiplier = 1e3;
       input = input.substring(0, input.length - 1);
     }
@@ -45,61 +51,39 @@ class ReverseLookup {
   static ReverseLookupResult? findBands(double resistance, int bandCount) {
     if (resistance <= 0) return null;
 
-    List<String> digits = ResistorData.digitValues.keys.toList();
-    List<String> multipliers = ResistorData.multiplierValues.keys.toList();
+    String resistanceStr = resistance.toStringAsExponential(9);
+    final parts = resistanceStr.split('e+');
+    final significantDigits = parts[0].replaceAll('.', '').substring(0, bandCount <= 4 ? 2 : 3);
+    final exponent = int.parse(parts[1]);
 
-    double bestError = double.infinity;
-    ReverseLookupResult? bestResult;
-
-    if (bandCount <= 4) {
-      // 3 or 4-band
-      for (String d1 in digits) {
-        for (String d2 in digits) {
-          for (String mult in multipliers) {
-            double val = (ResistorData.digitValues[d1]! * 10 +
-                    ResistorData.digitValues[d2]!) *
-                ResistorData.multiplierValues[mult]!;
-            double error = (val - resistance).abs();
-
-            if (error < bestError) {
-              bestError = error;
-              bestResult = ReverseLookupResult(
-                band1Color: d1,
-                band2Color: d2,
-                multiplierColor: mult,
-                actualResistance: val,
-              );
-            }
-          }
-        }
-      }
-    } else {
-      // 5 or 6-band
-      for (String d1 in digits) {
-        for (String d2 in digits) {
-          for (String d3 in digits) {
-            for (String mult in multipliers) {
-              double val = (ResistorData.digitValues[d1]! * 100 +
-                      ResistorData.digitValues[d2]! * 10 +
-                      ResistorData.digitValues[d3]!) *
-                  ResistorData.multiplierValues[mult]!;
-              double error = (val - resistance).abs();
-
-              if (error < bestError) {
-                bestError = error;
-                bestResult = ReverseLookupResult(
-                  band1Color: d1,
-                  band2Color: d2,
-                  band3Color: d3,
-                  multiplierColor: mult,
-                  actualResistance: val,
-                );
-              }
-            }
-          }
-        }
-      }
+    String band1Color = ResistorData.digitValues.keys
+        .firstWhere((k) => ResistorData.digitValues[k] == int.parse(significantDigits[0]));
+    String band2Color = ResistorData.digitValues.keys
+        .firstWhere((k) => ResistorData.digitValues[k] == int.parse(significantDigits[1]));
+    String? band3Color;
+    if (bandCount >= 5) {
+      band3Color = ResistorData.digitValues.keys
+          .firstWhere((k) => ResistorData.digitValues[k] == int.parse(significantDigits[2]));
     }
-    return bestResult;
+
+    final multiplierValue = pow(10, exponent - (bandCount <= 4 ? 1 : 2));
+    String multiplierColor = ResistorData.multiplierValues.keys.firstWhere(
+        (k) => ResistorData.multiplierValues[k] == multiplierValue,
+        orElse: () => 'Black');
+
+    final actualResistance = (bandCount <= 4
+            ? (int.parse(significantDigits[0]) * 10 + int.parse(significantDigits[1]))
+            : (int.parse(significantDigits[0]) * 100 +
+                int.parse(significantDigits[1]) * 10 +
+                int.parse(significantDigits[2]))) *
+        multiplierValue.toDouble();
+
+    return ReverseLookupResult(
+      band1Color: band1Color,
+      band2Color: band2Color,
+      band3Color: band3Color,
+      multiplierColor: multiplierColor,
+      actualResistance: actualResistance,
+    );
   }
 }

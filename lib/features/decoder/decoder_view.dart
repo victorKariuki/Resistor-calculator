@@ -67,7 +67,8 @@ class _DecoderViewState extends State<DecoderView> {
     });
 
     // Add to history
-    final historyEntry = '$resistanceString $toleranceString${tcrString.isNotEmpty ? ' $tcrString' : ''}';
+    final historyEntry =
+        '$resistanceString $toleranceString${tcrString.isNotEmpty ? ' $tcrString' : ''}';
     HistoryManager.addHistory(historyEntry);
   }
 
@@ -89,13 +90,16 @@ class _DecoderViewState extends State<DecoderView> {
     final double? resistance = ReverseLookup.parseResistance(text);
 
     if (resistance == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid resistance value')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Invalid resistance value')));
       return;
     }
 
-    final ReverseLookupResult? result = ReverseLookup.findBands(resistance, _bandCount);
+    final ReverseLookupResult? result = ReverseLookup.findBands(
+      resistance,
+      _bandCount,
+    );
 
     if (result == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -113,7 +117,9 @@ class _DecoderViewState extends State<DecoderView> {
       _multiplierColor = result.multiplierColor;
       _calculateResistance(); // This will also add to history
       // Also update the displayed value to the actual standard value found
-       _reverseLookupController.text = _formatResistance(result.actualResistance);
+      _reverseLookupController.text = _formatResistance(
+        result.actualResistance,
+      );
     });
   }
 
@@ -137,9 +143,7 @@ class _DecoderViewState extends State<DecoderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Through-Hole Decoder'),
-      ),
+      appBar: AppBar(title: const Text('Through-Hole Decoder')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -163,29 +167,37 @@ class _DecoderViewState extends State<DecoderView> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Text('Resistance',
-                        style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      'Resistance',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                     const SizedBox(height: 10),
                     Text(
                       '$_resistance $_tolerance',
-                      style: Theme.of(context)
-                          .textTheme
-                          .displaySmall
-                          ?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     if (_tcr.isNotEmpty) ...[
                       const SizedBox(height: 5),
-                      Text('TCR: $_tcr',
-                          style: Theme.of(context).textTheme.bodyLarge),
+                      Text(
+                        'TCR: $_tcr',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ],
                     const SizedBox(height: 10),
                     ElevatedButton.icon(
                       onPressed: () {
                         if (_resistance.isNotEmpty) {
-                          final valueToSave = '$_resistance $_tolerance${_tcr.isNotEmpty ? ' $_tcr' : ''}';
+                          final valueToSave =
+                              '$_resistance $_tolerance${_tcr.isNotEmpty ? ' $_tcr' : ''}';
                           FavoritesManager.addFavorite(valueToSave);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Saved "$valueToSave" to favorites.')),
+                            SnackBar(
+                              content: Text(
+                                'Saved "$valueToSave" to favorites.',
+                              ),
+                            ),
                           );
                         }
                       },
@@ -196,7 +208,7 @@ class _DecoderViewState extends State<DecoderView> {
                 ),
               ),
             ),
-             const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Reverse Lookup
             Card(
@@ -205,18 +217,26 @@ class _DecoderViewState extends State<DecoderView> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                     Text('Reverse Lookup', style: Theme.of(context).textTheme.titleLarge),
-                     const SizedBox(height: 10),
+                    Text(
+                      'Reverse Lookup',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 10),
                     TextField(
                       controller: _reverseLookupController,
                       decoration: const InputDecoration(
                         labelText: 'Enter Resistance (e.g., 4.7k)',
                         border: OutlineInputBorder(),
                       ),
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                     ),
                     const SizedBox(height: 10),
-                    ElevatedButton(onPressed: _performReverseLookup, child: const Text('Find Colors'))
+                    ElevatedButton(
+                      onPressed: _performReverseLookup,
+                      child: const Text('Find Colors'),
+                    ),
                   ],
                 ),
               ),
@@ -245,42 +265,67 @@ class _DecoderViewState extends State<DecoderView> {
             const SizedBox(height: 20),
 
             // Color Band Selectors
-            _buildBandSelector('1st Band (Digit 1)', _band1Color, (color) {
-              setState(() {
-                _band1Color = color!;
-                _calculateResistance();
-              });
-            }, ResistorData.digitValues.keys.toList()),
+            _buildBandSelector(
+              '1st Band (Digit 1)',
+              _band1Color,
+              (color) {
+                setState(() {
+                  _band1Color = color!;
+                  _calculateResistance();
+                });
+              },
+              ResistorData.digitValues.keys.toList(),
+            ),
 
-            _buildBandSelector('2nd Band (Digit 2)', _band2Color, (color) {
-              setState(() {
-                _band2Color = color!;
-                _calculateResistance();
-              });
-            }, ResistorData.digitValues.keys.toList()),
+            _buildBandSelector(
+              '2nd Band (Digit 2)',
+              _band2Color,
+              (color) {
+                setState(() {
+                  _band2Color = color!;
+                  _calculateResistance();
+                });
+              },
+              ResistorData.digitValues.keys.toList(),
+            ),
 
             if (_bandCount >= 5)
-              _buildBandSelector('3rd Band (Digit 3)', _band3Color, (color) {
+              _buildBandSelector(
+                '3rd Band (Digit 3)',
+                _band3Color,
+                (color) {
+                  setState(() {
+                    _band3Color = color!;
+                    _calculateResistance();
+                  });
+                },
+                ResistorData.digitValues.keys.toList(),
+              ),
+
+            _buildBandSelector(
+              'Multiplier',
+              _multiplierColor,
+              (color) {
                 setState(() {
-                  _band3Color = color!;
+                  _multiplierColor = color!;
                   _calculateResistance();
                 });
-              }, ResistorData.digitValues.keys.toList()),
-
-            _buildBandSelector('Multiplier', _multiplierColor, (color) {
-              setState(() {
-                _multiplierColor = color!;
-                _calculateResistance();
-              });
-            }, ResistorData.multiplierValues.keys.toList()),
+              },
+              ResistorData.multiplierValues.keys.toList(),
+            ),
 
             if (_bandCount > 3)
-              _buildBandSelector('Tolerance', _toleranceColor, (color) {
-                setState(() {
-                  _toleranceColor = color!;
-                  _calculateResistance();
-                });
-              }, ResistorData.toleranceValues.keys.toList()..remove('None')),
+              _buildBandSelector(
+                'Tolerance',
+                _toleranceColor,
+                (color) {
+                  setState(() {
+                    _toleranceColor = color!;
+                    _calculateResistance();
+                  });
+                },
+                ResistorData.toleranceValues.keys.toList()..remove('None'),
+              ),
 
             if (_bandCount == 6)
               _buildBandSelector('TCR', _tcrColor, (color) {
@@ -306,11 +351,11 @@ class _DecoderViewState extends State<DecoderView> {
       child: InputDecorator(
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.0),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
           ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(

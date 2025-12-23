@@ -45,14 +45,20 @@ class _PowerAnalysisViewState extends State<PowerAnalysisView> {
       _calculateTemperature(); // Recalculate temperature whenever power changes
     });
   }
-  
+
   void _calculateTemperature() {
     final double? power = double.tryParse(_power.replaceAll(' W', ''));
-    final double? thermalResistance = double.tryParse(_thermalResistanceController.text);
-    final double? ambientTemperature = double.tryParse(_ambientTemperatureController.text);
+    final double? thermalResistance = double.tryParse(
+      _thermalResistanceController.text,
+    );
+    final double? ambientTemperature = double.tryParse(
+      _ambientTemperatureController.text,
+    );
 
-    if(power != null && thermalResistance != null && ambientTemperature != null){
-       final temp = PowerAnalysisLogic.calculateTemperatureRise(
+    if (power != null &&
+        thermalResistance != null &&
+        ambientTemperature != null) {
+      final temp = PowerAnalysisLogic.calculateTemperatureRise(
         power: power,
         thermalResistance: thermalResistance,
         ambientTemperature: ambientTemperature,
@@ -82,7 +88,7 @@ class _PowerAnalysisViewState extends State<PowerAnalysisView> {
             icon: const Icon(Icons.clear),
             onPressed: _clearFields,
             tooltip: 'Clear Fields',
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -96,25 +102,42 @@ class _PowerAnalysisViewState extends State<PowerAnalysisView> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Text("Ohm's Law & Power", style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      "Ohm's Law & Power",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                     const SizedBox(height: 15),
-                    const Text('Enter any two values to calculate the others.', textAlign: TextAlign.center,),
+                    const Text(
+                      'Enter any two values to calculate the others.',
+                      textAlign: TextAlign.center,
+                    ),
                     const SizedBox(height: 20),
                     _buildTextField(
-                        controller: _voltageController, label: 'Voltage (V)'),
+                      controller: _voltageController,
+                      label: 'Voltage (V)',
+                    ),
                     const SizedBox(height: 15),
                     _buildTextField(
-                        controller: _currentController, label: 'Current (A)'),
+                      controller: _currentController,
+                      label: 'Current (A)',
+                    ),
                     const SizedBox(height: 15),
                     _buildTextField(
-                        controller: _resistanceController, label: 'Resistance (Ω)'),
+                      controller: _resistanceController,
+                      label: 'Resistance (Ω)',
+                    ),
                     const SizedBox(height: 25),
-                    ElevatedButton(onPressed: _calculate, child: const Text('Calculate')),
+                    ElevatedButton(
+                      onPressed: _calculate,
+                      child: const Text('Calculate'),
+                    ),
                     if (_power.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
-                        child: Text('Power: $_power',
-                            style: Theme.of(context).textTheme.headlineSmall),
+                        child: Text(
+                          'Power: $_power',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
                       ),
                   ],
                 ),
@@ -127,18 +150,30 @@ class _PowerAnalysisViewState extends State<PowerAnalysisView> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                     Text('Thermal Analysis', style: Theme.of(context).textTheme.titleLarge),
+                    Text(
+                      'Thermal Analysis',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                     const SizedBox(height: 15),
                     _buildTextField(
-                        controller: _thermalResistanceController, label: 'Thermal Resistance (°C/W)', onChanged: (_) => _calculateTemperature(),),
+                      controller: _thermalResistanceController,
+                      label: 'Thermal Resistance (°C/W)',
+                      onChanged: (_) => _calculateTemperature(),
+                    ),
                     const SizedBox(height: 15),
-                     _buildTextField(
-                        controller: _ambientTemperatureController, label: 'Ambient Temperature (°C)', onChanged: (_) => _calculateTemperature(),),
+                    _buildTextField(
+                      controller: _ambientTemperatureController,
+                      label: 'Ambient Temperature (°C)',
+                      onChanged: (_) => _calculateTemperature(),
+                    ),
                     if (_estimatedTemperature.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
-                        child: Text('Est. Component Temp: $_estimatedTemperature',
-                            style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center,),
+                        child: Text(
+                          'Est. Component Temp: $_estimatedTemperature',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                   ],
                 ),
@@ -150,7 +185,11 @@ class _PowerAnalysisViewState extends State<PowerAnalysisView> {
     );
   }
 
-  Widget _buildTextField({required TextEditingController controller, required String label, void Function(String)? onChanged}) {
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    void Function(String)? onChanged,
+  }) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
