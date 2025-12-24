@@ -31,14 +31,18 @@ android {
         create("release") {
             val keystorePropertiesFile = rootProject.file("key.properties")
             if (keystorePropertiesFile.exists()) {
-                val keystoreProperties = java.util.Properties()
-                keystorePropertiesFile.inputStream().use {
-                    keystoreProperties.load(it)
-                }
-                keyAlias = keystoreProperties["keyAlias"] as String?
-                keyPassword = keystoreProperties["keyPassword"] as String?
-                storeFile = keystoreProperties["storeFile"]?.let { file(it) }
-                storePassword = keystoreProperties["storePassword"] as String?
+                val props = keystorePropertiesFile.readText()
+                val keystoreProperties = props.lines()
+                    .filter { it.contains("=") && !it.trimStart().startsWith("#") }
+                    .associate {
+                        val (key, value) = it.split("=", limit = 2)
+                        key.trim() to value.trim()
+                    }
+                keyAlias = keystoreProperties["keyAlias"]
+                keyPassword = keystoreProperties["keyPassword"]
+                val storeFilePath = keystoreProperties["storeFile"]
+                storeFile = storeFilePath?.let { rootProject.file(it) }
+                storePassword = keystoreProperties["storePassword"]
             }
         }
     }
