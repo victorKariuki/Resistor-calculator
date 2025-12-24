@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './power_analysis_logic.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class PowerAnalysisView extends StatefulWidget {
   const PowerAnalysisView({super.key});
@@ -81,8 +82,8 @@ class _PowerAnalysisViewState extends State<PowerAnalysisView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Power Calculator'),
+      appBar: AppBarBack(
+        title: 'Power Calculator',
         actions: [
           IconButton(
             icon: const Icon(Icons.clear),

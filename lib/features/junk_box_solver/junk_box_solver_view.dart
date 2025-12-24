@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'junk_box_solver_logic.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class JunkBoxSolverView extends StatefulWidget {
   const JunkBoxSolverView({super.key});
@@ -42,7 +43,7 @@ class _JunkBoxSolverViewState extends State<JunkBoxSolverView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Junk Box Solver')),
+      appBar: const AppBarBack(title: 'Junk Box Solver'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

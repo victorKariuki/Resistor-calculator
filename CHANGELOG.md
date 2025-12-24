@@ -13,10 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CHANGELOG.md for version history tracking
 - CODEOWNERS file for code review assignments
 - Unit tests for core business logic modules
+- Unified AppBarBack widget for consistent navigation across all pages
 
 ### Changed
 - Updated dependencies to latest compatible versions
 - Improved decoder logic implementation
+- Unified UI/UX: Added back navigation buttons to all pages (Settings, About, and all calculator sub-pages)
+- Consistent AppBar styling across all views using AppBarBack widget
 
 ## [1.0.0] - 2025-12-24
 

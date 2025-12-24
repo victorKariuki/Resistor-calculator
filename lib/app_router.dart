@@ -37,11 +37,16 @@ class AppRouter {
           ),
         ],
       ),
+      // Settings and About as separate routes (modal-like, no bottom bar)
+      // They have back buttons for navigation
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsView(),
       ),
-      GoRoute(path: '/about', builder: (context, state) => const AboutView()),
+      GoRoute(
+        path: '/about',
+        builder: (context, state) => const AboutView(),
+      ),
     ],
   );
 

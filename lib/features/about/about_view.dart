@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class AboutView extends StatelessWidget {
   const AboutView({super.key});
@@ -6,7 +7,7 @@ class AboutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('About Resistor Toolkit')),
+      appBar: const AppBarBack(title: 'About Resistor Toolkit'),
       body: const Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),
