@@ -1,5 +1,15 @@
 # Resistor Calculator
 
+[![Flutter CI](https://github.com/victorKariuki/Resistor-calculator/actions/workflows/flutter.yml/badge.svg)](https://github.com/victorKariuki/Resistor-calculator/actions/workflows/flutter.yml)
+[![Dart CI](https://github.com/victorKariuki/Resistor-calculator/actions/workflows/dart.yml/badge.svg)](https://github.com/victorKariuki/Resistor-calculator/actions/workflows/dart.yml)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Flutter](https://img.shields.io/badge/Flutter-3.9.0+-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.9.0+-0175C2?logo=dart&logoColor=white)](https://dart.dev)
+[![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Web-lightgrey)](https://flutter.dev)
+[![Contributors](https://img.shields.io/github/contributors/victorKariuki/Resistor-calculator)](https://github.com/victorKariuki/Resistor-calculator/graphs/contributors)
+[![Issues](https://img.shields.io/github/issues/victorKariuki/Resistor-calculator)](https://github.com/victorKariuki/Resistor-calculator/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/victorKariuki/Resistor-calculator)](https://github.com/victorKariuki/Resistor-calculator/pulls)
+
 Resistor Calculator is a Flutter application designed to assist electronics hobbyists and professionals with resistor-related calculations. Whether you're decoding a resistor's value from its color bands, deciphering an SMD code, or finding the nearest standard resistor value, this app has you covered.
 
 ## Features
@@ -169,7 +179,7 @@ flutter pub get
 
 ## License
 
-[Add your license here - consider MIT, Apache 2.0, or GPL]
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## Links
 

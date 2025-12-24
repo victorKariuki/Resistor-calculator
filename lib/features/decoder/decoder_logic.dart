@@ -78,7 +78,7 @@ class DecoderLogic with ChangeNotifier {
 
     _resistance = _formatResistance(resistanceValue);
     _tolerance = '±$toleranceValue%';
-    _tcr = tcrValue != null ? '$tcrValue ppm/K' : '';
+    _tcr = '$tcrValue ppm/K';
 
     notifyListeners();
   }
