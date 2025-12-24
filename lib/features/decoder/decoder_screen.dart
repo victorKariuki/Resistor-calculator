@@ -6,6 +6,7 @@ import 'package:resistor_calculator/features/decoder/widgets/band_selector.dart'
 import 'package:resistor_calculator/features/decoder/widgets/resistance_display.dart';
 import 'package:resistor_calculator/features/decoder/widgets/resistor_visualization.dart';
 import 'package:resistor_calculator/features/decoder/widgets/reverse_lookup.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class DecoderScreen extends StatelessWidget {
   const DecoderScreen({super.key});
@@ -17,7 +18,7 @@ class DecoderScreen extends StatelessWidget {
       child: Consumer<DecoderLogic>(
         builder: (context, logic, child) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Through-Hole Decoder')),
+            appBar: const AppBarBack(title: 'Through-Hole Decoder'),
             body: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
               child: Column(

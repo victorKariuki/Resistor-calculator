@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resistor_calculator/theme_provider.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -10,7 +11,7 @@ class SettingsView extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: const AppBarBack(title: 'Settings'),
       body: ListView(
         children: [
           ListTile(

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:resistor_calculator/features/favorites/favorites_manager.dart';
 import 'package:resistor_calculator/features/history/history_manager.dart';
 import 'package:resistor_calculator/features/smd_decoder/smd_decoder_logic.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class SmdDecoderView extends StatelessWidget {
   const SmdDecoderView({super.key});
@@ -14,7 +15,7 @@ class SmdDecoderView extends StatelessWidget {
       child: Consumer<SmdDecoderLogic>(
         builder: (context, logic, child) {
           return Scaffold(
-            appBar: AppBar(title: const Text('SMD Resistor Decoder')),
+            appBar: const AppBarBack(title: 'SMD Resistor Decoder'),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

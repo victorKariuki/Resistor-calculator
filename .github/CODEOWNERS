@@ -1,0 +1,37 @@
+# CODEOWNERS file
+# This file defines code owners for different parts of the repository.
+# When a pull request is opened, the owners will be automatically requested for review.
+#
+# More information: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for the entire repository
+* @victorKariuki
+
+# Documentation
+*.md @victorKariuki
+README.md @victorKariuki
+CONTRIBUTING.md @victorKariuki
+CODE_OF_CONDUCT.md @victorKariuki
+SECURITY.md @victorKariuki
+CHANGELOG.md @victorKariuki
+
+# Configuration files
+.github/ @victorKariuki
+pubspec.yaml @victorKariuki
+analysis_options.yaml @victorKariuki
+
+# Core business logic
+lib/features/decoder/decoder_logic.dart @victorKariuki
+lib/features/smd_decoder/smd_decoder_logic.dart @victorKariuki
+lib/features/power_analysis/power_analysis_logic.dart @victorKariuki
+lib/features/circuit_synthesis/voltage_divider/voltage_divider_logic.dart @victorKariuki
+lib/features/rf_analysis/l_match/l_match_logic.dart @victorKariuki
+lib/features/junk_box_solver/junk_box_solver_logic.dart @victorKariuki
+lib/features/e_series/e_series_logic.dart @victorKariuki
+
+# Tests
+test/ @victorKariuki
+
+# CI/CD workflows
+.github/workflows/ @victorKariuki
+

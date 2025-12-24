@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'l_match_logic.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class LMatchView extends StatefulWidget {
   const LMatchView({super.key});
@@ -46,8 +47,8 @@ class _LMatchViewState extends State<LMatchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('L-Match Impedance'),
+      appBar: AppBarBack(
+        title: 'L-Match Impedance',
         actions: [
           IconButton(
             icon: const Icon(Icons.clear),

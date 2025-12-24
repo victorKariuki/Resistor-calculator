@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resistor_calculator/features/e_series/e_series_data.dart';
 import 'package:resistor_calculator/features/e_series/e_series_logic.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class ESeriesView extends StatelessWidget {
   const ESeriesView({super.key});
@@ -13,7 +14,7 @@ class ESeriesView extends StatelessWidget {
       child: Consumer<ESeriesLogic>(
         builder: (context, logic, child) {
           return Scaffold(
-            appBar: AppBar(title: const Text('E-Series Validator')),
+            appBar: const AppBarBack(title: 'E-Series Validator'),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

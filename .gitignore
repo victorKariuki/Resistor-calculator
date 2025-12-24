@@ -43,3 +43,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Kotlin/Gradle build artifacts
+**/.kotlin/
+**/.gradle/
+
+# Signing keys - NEVER commit these!
+/android/key.properties
+*.jks
+*.keystore

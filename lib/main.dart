@@ -3,11 +3,17 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:resistor_calculator/app_router.dart';
 import 'package:resistor_calculator/theme_provider.dart';
+import 'package:resistor_calculator/features/favorites/favorites_manager.dart';
+import 'package:resistor_calculator/features/history/history_manager.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => FavoritesManager()),
+        ChangeNotifierProvider(create: (_) => HistoryManager()),
+      ],
       child: const MyApp(),
     ),
   );

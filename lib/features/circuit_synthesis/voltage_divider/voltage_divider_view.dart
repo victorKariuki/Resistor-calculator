@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './voltage_divider_logic.dart';
+import 'package:resistor_calculator/widgets/app_bar_back.dart';
 
 class VoltageDividerView extends StatefulWidget {
   const VoltageDividerView({super.key});
@@ -79,8 +80,8 @@ class _VoltageDividerViewState extends State<VoltageDividerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Voltage Divider'),
+      appBar: AppBarBack(
+        title: 'Voltage Divider',
         actions: [
           IconButton(
             icon: const Icon(Icons.clear),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ThemeProvider with ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
@@ -21,10 +20,26 @@ class AppTheme {
   static const Color _primarySeedColor = Colors.indigo;
 
   static final TextTheme _textTheme = TextTheme(
-    displayLarge: GoogleFonts.oswald(fontSize: 57, fontWeight: FontWeight.bold),
-    titleLarge: GoogleFonts.oswald(fontSize: 22, fontWeight: FontWeight.w500),
-    bodyMedium: GoogleFonts.roboto(fontSize: 14),
-    labelLarge: GoogleFonts.roboto(fontSize: 14, fontWeight: FontWeight.w500),
+    displayLarge: const TextStyle(
+      fontFamily: 'Oswald',
+      fontSize: 57,
+      fontWeight: FontWeight.bold,
+    ),
+    titleLarge: const TextStyle(
+      fontFamily: 'Oswald',
+      fontSize: 22,
+      fontWeight: FontWeight.w500,
+    ),
+    bodyMedium: const TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 14,
+      fontWeight: FontWeight.normal,
+    ),
+    labelLarge: const TextStyle(
+      fontFamily: 'Roboto',
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+    ),
   );
 
   static final ThemeData lightTheme = ThemeData(
