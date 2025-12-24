@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unified UI/UX: Added back navigation buttons to all pages (Settings, About, and all calculator sub-pages)
 - Consistent AppBar styling across all views using AppBarBack widget
 
+### Fixed
+- Fixed navigation error when pressing back button on Settings/About pages by using GoRouter's context.pop() instead of Navigator.pop()
+
 ## [1.0.0] - 2025-12-24
 
 ### Added

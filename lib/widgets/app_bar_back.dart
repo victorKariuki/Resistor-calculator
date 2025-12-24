@@ -22,9 +22,11 @@ class AppBarBack extends StatelessWidget implements PreferredSizeWidget {
           ? IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
+                // Use GoRouter's canPop() and pop() methods
+                if (context.canPop()) {
+                  context.pop();
                 } else {
+                  // Fallback to home if no route to pop
                   context.go('/home');
                 }
               },
