@@ -2,6 +2,7 @@ name: resistor_calculator
 description: "An application for calculating resistor values from color codes, SMD codes, and finding standard values."
 publish_to: 'none' 
 version: 1.0.0+1
+license: Apache-2.0
 
 environment:
   sdk: ^3.9.0
