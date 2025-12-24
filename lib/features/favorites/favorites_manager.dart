@@ -1,26 +1,39 @@
+
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoritesManager {
+class FavoritesManager with ChangeNotifier {
   static const _key = 'favorite_resistors';
 
-  static Future<List<String>> getFavorites() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getStringList(_key) ?? [];
+  List<String> _favorites = [];
+  List<String> get favorites => _favorites;
+
+  FavoritesManager() {
+    _loadFavorites();
   }
 
-  static Future<void> addFavorite(String resistance) async {
+  Future<void> _loadFavorites() async {
     final prefs = await SharedPreferences.getInstance();
-    final favorites = await getFavorites();
-    if (!favorites.contains(resistance)) {
-      favorites.add(resistance);
-      await prefs.setStringList(_key, favorites);
+    _favorites = prefs.getStringList(_key) ?? [];
+    notifyListeners();
+  }
+
+  Future<void> addFavorite(String resistance) async {
+    if (!_favorites.contains(resistance)) {
+      _favorites.add(resistance);
+      await _saveFavorites();
+      notifyListeners();
     }
   }
 
-  static Future<void> removeFavorite(String resistance) async {
+  Future<void> removeFavorite(String resistance) async {
+    _favorites.remove(resistance);
+    await _saveFavorites();
+    notifyListeners();
+  }
+
+  Future<void> _saveFavorites() async {
     final prefs = await SharedPreferences.getInstance();
-    final favorites = await getFavorites();
-    favorites.remove(resistance);
-    await prefs.setStringList(_key, favorites);
+    await prefs.setStringList(_key, _favorites);
   }
 }

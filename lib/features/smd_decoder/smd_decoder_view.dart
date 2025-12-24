@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../favorites/favorites_manager.dart';
 import '../history/history_manager.dart';
-import 'smd_decoder_logic.dart';
+import 'smd_codes.dart';
 
 class SmdDecoderView extends StatefulWidget {
   const SmdDecoderView({super.key});
@@ -11,43 +13,59 @@ class SmdDecoderView extends StatefulWidget {
 }
 
 class _SmdDecoderViewState extends State<SmdDecoderView> {
-  final _smdCodeController = TextEditingController();
-  String _resistance = '';
+  final _textController = TextEditingController();
+  String _result = '';
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   void _decodeSmd() {
-    final String code = _smdCodeController.text;
-    final String? resistance = SmdDecoderLogic.decode(code);
+    final code = _textController.text.trim().toUpperCase();
+    if (code.isEmpty) return;
+
+    final result = SmdCodes.decode(code);
 
     setState(() {
-      _resistance = resistance ?? 'Invalid Code';
+      _result = result;
     });
 
-    if (resistance != null) {
-      HistoryManager.addHistory(resistance);
-    }
+    Provider.of<HistoryManager>(context, listen: false).addHistory('SMD: $code -> $result');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('SMD Decoder')),
+      appBar: AppBar(title: const Text('SMD Resistor Decoder')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+          children: [
             TextField(
-              controller: _smdCodeController,
+              controller: _textController,
               decoration: const InputDecoration(
                 labelText: 'Enter SMD Code',
                 border: OutlineInputBorder(),
-                helperText: 'e.g., 103, 1002, 4R7, 01C',
+                hintText: 'e.g., 103, 4R7, 01C',
               ),
+              onChanged: (value) {
+                if (value.isEmpty) {
+                  setState(() {
+                    _result = '';
+                  });
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _decodeSmd,
+              child: const Text('Decode'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: _decodeSmd, child: const Text('Decode')),
-            const SizedBox(height: 30),
-            if (_resistance.isNotEmpty && _resistance != 'Invalid Code')
+            if (_result.isNotEmpty)
               Card(
                 elevation: 4,
                 child: Padding(
@@ -55,12 +73,12 @@ class _SmdDecoderViewState extends State<SmdDecoderView> {
                   child: Column(
                     children: [
                       Text(
-                        'Resistance',
+                        'Result',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        _resistance,
+                        _result,
                         style: Theme.of(context)
                             .textTheme
                             .displaySmall
@@ -69,12 +87,10 @@ class _SmdDecoderViewState extends State<SmdDecoderView> {
                       const SizedBox(height: 10),
                       ElevatedButton.icon(
                         onPressed: () {
-                          FavoritesManager.addFavorite(_resistance);
+                          Provider.of<FavoritesManager>(context, listen: false).addFavorite('SMD: $_result');
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Saved "$_resistance" to favorites.',
-                              ),
+                            const SnackBar(
+                              content: Text('Saved to favorites.'),
                             ),
                           );
                         },
@@ -84,15 +100,6 @@ class _SmdDecoderViewState extends State<SmdDecoderView> {
                     ],
                   ),
                 ),
-              ),
-            if (_resistance == 'Invalid Code')
-              Text(
-                'Invalid Code',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall
-                    ?.copyWith(color: Colors.red),
-                textAlign: TextAlign.center,
               ),
           ],
         ),

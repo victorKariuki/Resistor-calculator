@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../favorites/favorites_manager.dart';
 import '../history/history_manager.dart';
 import 'resistor_data.dart';
@@ -69,7 +71,7 @@ class _DecoderViewState extends State<DecoderView> {
     // Add to history
     final historyEntry =
         '$resistanceString $toleranceString${tcrString.isNotEmpty ? ' $tcrString' : ''}';
-    HistoryManager.addHistory(historyEntry);
+    Provider.of<HistoryManager>(context, listen: false).addHistory(historyEntry);
   }
 
   String _formatResistance(double value) {
@@ -191,7 +193,7 @@ class _DecoderViewState extends State<DecoderView> {
                         if (_resistance.isNotEmpty) {
                           final valueToSave =
                               '$_resistance $_tolerance${_tcr.isNotEmpty ? ' $_tcr' : ''}';
-                          FavoritesManager.addFavorite(valueToSave);
+                          Provider.of<FavoritesManager>(context, listen: false).addFavorite(valueToSave);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(

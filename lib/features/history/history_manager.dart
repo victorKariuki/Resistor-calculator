@@ -1,34 +1,44 @@
+
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HistoryManager {
+class HistoryManager with ChangeNotifier {
   static const _key = 'history_resistors';
   static const _historyLimit = 20;
 
-  static Future<List<String>> getHistory() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getStringList(_key) ?? [];
+  List<String> _history = [];
+  List<String> get history => _history;
+
+  HistoryManager() {
+    _loadHistory();
   }
 
-  static Future<void> addHistory(String calculation) async {
+  Future<void> _loadHistory() async {
     final prefs = await SharedPreferences.getInstance();
-    List<String> history = await getHistory();
+    _history = prefs.getStringList(_key) ?? [];
+    notifyListeners();
+  }
 
-    // Remove the calculation if it already exists to avoid duplicates and move it to the top
-    history.remove(calculation);
+  Future<void> addHistory(String calculation) async {
+    _history.remove(calculation);
+    _history.insert(0, calculation);
 
-    // Add the new calculation to the beginning of the list
-    history.insert(0, calculation);
-
-    // Trim the list if it exceeds the limit
-    if (history.length > _historyLimit) {
-      history = history.sublist(0, _historyLimit);
+    if (_history.length > _historyLimit) {
+      _history = _history.sublist(0, _historyLimit);
     }
 
-    await prefs.setStringList(_key, history);
+    await _saveHistory();
+    notifyListeners();
   }
 
-  static Future<void> clearHistory() async {
+  Future<void> clearHistory() async {
+    _history.clear();
+    await _saveHistory();
+    notifyListeners();
+  }
+
+  Future<void> _saveHistory() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_key);
+    await prefs.setStringList(_key, _history);
   }
 }
