@@ -53,29 +53,37 @@ class ReverseLookup {
 
     String resistanceStr = resistance.toStringAsExponential(9);
     final parts = resistanceStr.split('e+');
-    final significantDigits = parts[0].replaceAll('.', '').substring(0, bandCount <= 4 ? 2 : 3);
+    final significantDigits = parts[0]
+        .replaceAll('.', '')
+        .substring(0, bandCount <= 4 ? 2 : 3);
     final exponent = int.parse(parts[1]);
 
-    String band1Color = ResistorData.digitValues.keys
-        .firstWhere((k) => ResistorData.digitValues[k] == int.parse(significantDigits[0]));
-    String band2Color = ResistorData.digitValues.keys
-        .firstWhere((k) => ResistorData.digitValues[k] == int.parse(significantDigits[1]));
+    String band1Color = ResistorData.digitValues.keys.firstWhere(
+      (k) => ResistorData.digitValues[k] == int.parse(significantDigits[0]),
+    );
+    String band2Color = ResistorData.digitValues.keys.firstWhere(
+      (k) => ResistorData.digitValues[k] == int.parse(significantDigits[1]),
+    );
     String? band3Color;
     if (bandCount >= 5) {
-      band3Color = ResistorData.digitValues.keys
-          .firstWhere((k) => ResistorData.digitValues[k] == int.parse(significantDigits[2]));
+      band3Color = ResistorData.digitValues.keys.firstWhere(
+        (k) => ResistorData.digitValues[k] == int.parse(significantDigits[2]),
+      );
     }
 
     final multiplierValue = pow(10, exponent - (bandCount <= 4 ? 1 : 2));
     String multiplierColor = ResistorData.multiplierValues.keys.firstWhere(
-        (k) => ResistorData.multiplierValues[k] == multiplierValue,
-        orElse: () => 'Black');
+      (k) => ResistorData.multiplierValues[k] == multiplierValue,
+      orElse: () => 'Black',
+    );
 
-    final actualResistance = (bandCount <= 4
-            ? (int.parse(significantDigits[0]) * 10 + int.parse(significantDigits[1]))
+    final actualResistance =
+        (bandCount <= 4
+            ? (int.parse(significantDigits[0]) * 10 +
+                  int.parse(significantDigits[1]))
             : (int.parse(significantDigits[0]) * 100 +
-                int.parse(significantDigits[1]) * 10 +
-                int.parse(significantDigits[2]))) *
+                  int.parse(significantDigits[1]) * 10 +
+                  int.parse(significantDigits[2]))) *
         multiplierValue.toDouble();
 
     return ReverseLookupResult(

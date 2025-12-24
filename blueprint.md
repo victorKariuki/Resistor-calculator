@@ -1,63 +1,66 @@
-# Resistor Master Blueprint
+# Resistor Toolkit Blueprint
 
 ## Overview
 
-Resistor Master is a Flutter application designed for electronics enthusiasts and professionals. It provides a suite of tools to simplify resistor-related calculations and circuit analysis. This document outlines the existing features and the plan to evolve the application into the "Ultimate Edition" as specified in the SRS v4.0.
+This document outlines the architecture and future development plans for the Resistor Toolkit application. The app provides a collection of tools for electronics enthusiasts and professionals to work with resistors.
 
-## Implemented Features
+## Current Features
 
-*   **Through-Hole Resistor Decoder:** Decodes 4, 5, and 6-band resistors based on their color codes.
-*   **Through-Hole Reverse Lookup:** Converts a resistance value back to color bands.
-*   **SMD Resistor Decoder:** Decodes 3-digit, 4-digit, and EIA-96 SMD resistor codes.
-*   **E-Series Validator & Quantizer:** Validates resistor values against standard E-series (E6-E192) and finds the nearest standard value.
-*   **Favorites:** Allows users to save frequently used resistor values.
-*   **History:** Keeps a record of all decoded resistor values and calculations.
-*   **Power Calculator:** Calculates power, voltage, current, or resistance.
-*   **Voltage Divider Calculator:** Computes output voltage.
-*   **L-Match Impedance Matching Calculator:** Designs impedance matching networks.
-*   **Theming:** Supports light, dark, and system themes with a Material 3 design.
+*   **Resistor Color Code Decoder:** Decodes the value of a resistor based on its color bands.
+*   **SMD Resistor Decoder:** Decodes the value of a surface-mount device (SMD) resistor.
+*   **E-Series Finder:** Finds standard resistor values in the E-series (E6, E12, E24, etc.).
+*   **Junk Box Solver:** Helps find a target resistance value using a combination of resistors from a "junk box."
+*   **Power Analysis:** Calculates power dissipation in a resistor.
+*   **Voltage Divider Calculator:** Calculates the output voltage of a voltage divider circuit.
+*   **L-Match Impedance Matching:** Calculates the component values for an L-match impedance matching network.
+*   **Favorites:** Allows users to save their favorite resistor values.
+*   **History:** Keeps a history of recent calculations.
+*   **Light/Dark Mode:** Supports both light and dark themes.
 
-## Design
+## Refactoring Plan
 
-*   **Theme:** Uses Material 3 design principles with a deep purple seed color.
-*   **Fonts:** Utilizes Google Fonts (Oswald, Roboto, Open Sans) for typography.
-*   **Layout:** A central home screen provides navigation to all feature modules.
+### 1. Separate UI from Business Logic
 
-## Development Plan (SRS v4.0)
+**Goal:** Improve maintainability and testability by separating the UI from the business logic.
 
-This section outlines the features to be implemented based on the Software Requirements Specification v4.0.
+*   **Action:** For each feature, I will create a separate "logic" or "controller" class to handle the business logic. The UI will then call methods on this class to perform calculations and update the state.
+*   **Example:** In the `decoder_view.dart`, the resistor calculation logic will be moved to a `DecoderLogic` class.
 
-### Current Task: "Junk Box" Reverse Solver
+### 2. Optimize State Management
 
-Implementing REQ-4 from the SRS. This feature will find series and parallel combinations of resistors from a user-defined list to achieve a target resistance.
+**Goal:** Improve the efficiency of state management and reduce unnecessary widget rebuilds.
 
-### Future Features
+*   **Action:**
+    *   I will use `ValueNotifier` for simple, local state within individual widgets.
+    *   I will use `Consumer` widgets to rebuild only the parts of the UI that depend on the state.
+    *   I will ensure that `ChangeNotifier` is used only for complex state that needs to be shared across multiple widgets.
 
-#### Domain 1: Identification & Fundamentals
-*   **[REQ-1.4] Through-Hole Reverse Lookup:** **(Completed)**
-*   **[REQ-2.3, 2.4] Advanced SMD Decoding:** **(Completed)**
-*   **[REQ-3] E-Series Validator & Quantizer:** **(Completed)**
+### 3. Enhance Code Readability
 
-#### Domain 2: Circuit Design & Synthesis
-*   **[REQ-4] "Junk Box" Reverse Solver:** **(In Progress)**
-*   **[REQ-5.3, 5.4] Advanced Voltage Divider:** Add load analysis and output impedance calculation.
-*   **[REQ-6] LED Array Wizard:** Calculate current-limiting resistors for LED setups.
-*   **[REQ-7] Op-Amp Gain Calculator:** Design feedback networks for common op-amp configurations.
+**Goal:** Make the code easier to understand and maintain.
 
-#### Domain 3: Power & Physics
-*   **[REQ-8.2] Adiabatic Pulse Calculator:** Analyze resistor survivability during power surges.
-*   **[REQ-9] Thermal Derating Engine:** Calculate effective power rating based on ambient temperature.
-*   **[REQ-10] PCB Trace Resistance Calculator:** Model resistance and current capacity of PCB traces based on IPC standards.
+*   **Action:**
+    *   I will add comments to explain complex logic.
+    *   I will use more descriptive variable and function names.
+    *   I will ensure consistent formatting throughout the codebase.
 
-#### Domain 4: RF & Signal Integrity
-*   **[REQ-11] RF Attenuator Designer:** Design Pi, T, and Bridged-T attenuators.
-*   **[REQ-12] Thermal Noise Calculator:** Calculate Johnson-Nyquist noise for a resistor.
-*   **[REQ-13] High-Frequency Impedance Estimator:** Model parasitic ESL/ESR effects.
+### 4. Review and Optimize Widgets
 
-#### Domain 5: Sensors & Manufacturing
-*   **[REQ-14] Thermistor Linearizer:** Convert resistance to temperature using Beta and Steinhart-Hart models.
-*   **[REQ-15] Wheatstone Bridge Analyzer:** Calculate the output of a Wheatstone bridge.
+**Goal:** Improve the performance of the UI.
 
-#### UI/UX & Non-Functional Requirements
-*   **[UI-2] Metric Suffix Input:** Allow users to type "k", "M", "u" in input fields.
-*   **[NFR-4] Critical Warnings:** Implement safety warnings for exceeding component ratings.
+*   **Action:**
+    *   I will use `const` constructors for widgets that do not change.
+    *   I will break down large widgets into smaller, more manageable ones.
+    *   I will use `ListView.builder` for long lists of items.
+
+### 5. Centralize and Improve Routing
+
+**Goal:** Make the navigation logic more robust and easier to manage.
+
+*   **Action:** The routing is already well-structured in `router.dart`. I will review it for any potential improvements, such as using named routes more consistently.
+
+### 6. Consolidate Theme and Styling
+
+**Goal:** Ensure a consistent look and feel throughout the application.
+
+*   **Action:** The theme is defined in `theme_provider.dart`. I will review this file to ensure that all colors, fonts, and other styles are defined in one place and used consistently.

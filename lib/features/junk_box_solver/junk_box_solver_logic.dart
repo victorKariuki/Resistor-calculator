@@ -16,7 +16,9 @@ class JunkBoxSolverLogic {
           final seriesResistance = r1 + r2;
           if ((seriesResistance - targetResistance).abs() / targetResistance <=
               tolerance) {
-            results.add('$r1 Ω + $r2 Ω = ${seriesResistance.toStringAsFixed(2)} Ω (Series)');
+            results.add(
+              '$r1 Ω + $r2 Ω = ${seriesResistance.toStringAsFixed(2)} Ω (Series)',
+            );
           }
         }
 
@@ -25,10 +27,12 @@ class JunkBoxSolverLogic {
           final r1 = availableResistors[i];
           final r2 = availableResistors[j];
           final parallelResistance = (r1 * r2) / (r1 + r2);
-          if ((parallelResistance - targetResistance).abs() / targetResistance <=
+          if ((parallelResistance - targetResistance).abs() /
+                  targetResistance <=
               tolerance) {
             results.add(
-                '$r1 Ω || $r2 Ω = ${parallelResistance.toStringAsFixed(2)} Ω (Parallel)');
+              '$r1 Ω || $r2 Ω = ${parallelResistance.toStringAsFixed(2)} Ω (Parallel)',
+            );
           }
         }
       }

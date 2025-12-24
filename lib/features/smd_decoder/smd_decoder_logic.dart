@@ -1,167 +1,28 @@
-import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:resistor_calculator/features/smd_decoder/smd_codes.dart';
 
-class SmdDecoderLogic {
-  static final Map<String, int> _eia96CodeMap = {
-    '01': 100,
-    '02': 102,
-    '03': 105,
-    '04': 107,
-    '05': 110,
-    '06': 113,
-    '07': 115,
-    '08': 118,
-    '09': 121,
-    '10': 124,
-    '11': 127,
-    '12': 130,
-    '13': 133,
-    '14': 137,
-    '15': 140,
-    '16': 143,
-    '17': 147,
-    '18': 150,
-    '19': 154,
-    '20': 158,
-    '21': 162,
-    '22': 165,
-    '23': 169,
-    '24': 174,
-    '25': 178,
-    '26': 182,
-    '27': 187,
-    '28': 191,
-    '29': 196,
-    '30': 200,
-    '31': 205,
-    '32': 210,
-    '33': 215,
-    '34': 221,
-    '35': 226,
-    '36': 232,
-    '37': 237,
-    '38': 243,
-    '39': 249,
-    '40': 255,
-    '41': 261,
-    '42': 267,
-    '43': 274,
-    '44': 280,
-    '45': 287,
-    '46': 294,
-    '47': 301,
-    '48': 309,
-    '49': 316,
-    '50': 324,
-    '51': 332,
-    '52': 340,
-    '53': 348,
-    '54': 357,
-    '55': 365,
-    '56': 374,
-    '57': 383,
-    '58': 392,
-    '59': 402,
-    '60': 412,
-    '61': 422,
-    '62': 432,
-    '63': 442,
-    '64': 453,
-    '65': 464,
-    '66': 475,
-    '67': 487,
-    '68': 499,
-    '69': 511,
-    '70': 523,
-    '71': 536,
-    '72': 549,
-    '73': 562,
-    '74': 576,
-    '75': 590,
-    '76': 604,
-    '77': 619,
-    '78': 634,
-    '79': 649,
-    '80': 665,
-    '81': 681,
-    '82': 698,
-    '83': 715,
-    '84': 732,
-    '85': 750,
-    '86': 768,
-    '87': 787,
-    '88': 806,
-    '89': 825,
-    '90': 845,
-    '91': 866,
-    '92': 887,
-    '93': 909,
-    '94': 931,
-    '95': 953,
-    '96': 976,
-  };
+class SmdDecoderLogic with ChangeNotifier {
+  final _textController = TextEditingController();
+  String _result = '';
 
-  static final Map<String, double> _eia96MultiplierMap = {
-    'Z': 0.001,
-    'Y': 0.01,
-    'R': 0.1, // 'R' is used in EIA-96 as well
-    'X': 0.1,
-    'A': 1,
-    'B': 10,
-    'C': 100,
-    'D': 1000,
-    'E': 10000,
-    'F': 100000,
-    'H': 1000000,
-  };
+  TextEditingController get textController => _textController;
+  String get result => _result;
 
-  static String? decode(String code) {
-    code = code.trim().toUpperCase();
-    if (code.isEmpty) return null;
-
-    // EIA-96 system
-    if (code.length == 3 &&
-        _eia96CodeMap.containsKey(code.substring(0, 2)) &&
-        _eia96MultiplierMap.containsKey(code.substring(2, 3))) {
-      final int valueCode = _eia96CodeMap[code.substring(0, 2)]!;
-      final double multiplier = _eia96MultiplierMap[code.substring(2, 3)]!;
-      return _formatResistance(valueCode * multiplier);
+  void decodeSmd() {
+    final code = _textController.text.trim().toUpperCase();
+    if (code.isEmpty) {
+      _result = '';
+      notifyListeners();
+      return;
     }
 
-    // Standard 3 or 4-digit system
-    if (RegExp(r'^[0-9]+R?[0-9]*$').hasMatch(code)) {
-      if (code.contains('R')) {
-        final parts = code.split('R');
-        if (parts.length == 2) {
-          final part1 = parts[0].isNotEmpty ? parts[0] : '0';
-          final part2 = parts[1].isNotEmpty ? parts[1] : '0';
-          return _formatResistance(double.parse('$part1.$part2'));
-        }
-      } else {
-        if (code.length >= 2 && code.length <= 4) {
-          final valueStr = code.substring(0, code.length - 1);
-          final multiplier = int.parse(code.substring(code.length - 1));
-          final value = int.parse(valueStr);
-          return _formatResistance(value * pow(10, multiplier).toDouble());
-        }
-      }
-    }
-
-    return null; // Invalid code
+    _result = SmdCodes.decode(code);
+    notifyListeners();
   }
 
-  static String _formatResistance(double value) {
-    if (value == 0) return '0 Ω';
-
-    final log10Value = log(value.abs()) / log(10);
-
-    if (log10Value >= 9) {
-      return '${(value / 1e9).toStringAsPrecision(3)} GΩ';
-    } else if (log10Value >= 6) {
-      return '${(value / 1e6).toStringAsPrecision(3)} MΩ';
-    } else if (log10Value >= 3) {
-      return '${(value / 1e3).toStringAsPrecision(3)} kΩ';
-    } else {
-      return '${value.toStringAsPrecision(3)} Ω';
-    }
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
   }
 }

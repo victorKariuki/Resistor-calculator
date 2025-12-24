@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'favorites_manager.dart';
@@ -9,15 +8,11 @@ class FavoritesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Favorites'),
-      ),
+      appBar: AppBar(title: const Text('Favorites')),
       body: Consumer<FavoritesManager>(
         builder: (context, favoritesManager, child) {
           if (favoritesManager.favorites.isEmpty) {
-            return const Center(
-              child: Text('No favorites saved yet.'),
-            );
+            return const Center(child: Text('No favorites saved yet.'));
           }
 
           return ListView.builder(
